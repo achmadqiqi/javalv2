@@ -1,13 +1,20 @@
 package views;
 
+import controllers.OMController;
 import controllers.PMController;
+import entities.Customer;
 import entities.Product;
+import entities.Shop;
+import models.Order;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame{
+    private Shop shop;
     private PMController pmController;
+    private OMController omController;
+
     //builder
     private JPanel mainPanel;
     private JPanel topPanel;
@@ -17,16 +24,19 @@ public class MainFrame extends JFrame{
     private JTextArea displayProduct;
     private JLabel messageTxt;
 
-    public MainFrame(String title,PMController pmController){
+    public MainFrame(String title, Shop shop){
         super(title);
-        this.pmController = pmController;
+        pmController = new PMController(shop.getPm());
+        omController = new OMController(shop.getOm());
         initComponents();
     }
 
+    public Shop getShop() {
+        return shop;
+    }
     public PMController getPmController() {
         return pmController;
     }
-
     private void initComponents() {
         //Listener
         printAllProductButton.addActionListener(e -> {
@@ -63,5 +73,19 @@ public class MainFrame extends JFrame{
     }
     public void showMessage(String message){
         messageTxt.setText(message);
+    }
+    public void showDataShop{
+        System.out.println(" Data Product :");
+        for (Product p : shop.getPm().getAllProduct()){
+            System.out.println(p);
+        }
+        System.out.println(" Data Order :");
+        for (Order o : shop.getOm().getOrders()){
+            System.out.println(o);
+        }
+        System.out.println(" Data Customer :");
+        for (Customer c : shop.getCm().getCustomerList()){
+            System.out.println(c);
+        }
     }
 }

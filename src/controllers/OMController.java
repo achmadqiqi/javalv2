@@ -10,9 +10,9 @@ public class OMController {
     public OMController (OrderManager om){
         this.om = om;
     }
-    public Order createOrder(Shop shop){
-        return om.createOrder(shop);
-    }
+    //public Order createOrder(Shop shop){
+    //    return om.createOrder(shop);
+    //}
 
     public void addOrder(Order order) {
         om.addOrder(order);

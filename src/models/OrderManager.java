@@ -19,4 +19,8 @@ public class OrderManager {
             System.out.println(o);
         }
     }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
 }
