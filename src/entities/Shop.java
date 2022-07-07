@@ -10,7 +10,6 @@ public class Shop {
     private ProductManager pm = new ProductManager();
     private OrderManager om = new OrderManager();
     private CustomerManager cm = new CustomerManager();
-    private String name, npwp, alamat;
     public Shop(String name){
         this.name = name;
     }

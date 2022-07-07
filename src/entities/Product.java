@@ -36,7 +36,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "entities.Product{" +
+        return "Product{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", price=" + price +

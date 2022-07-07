@@ -9,37 +9,6 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="910c6" binding="topPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints border-constraint="North"/>
-        <properties>
-          <background color="-10924861"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <component id="9fe55" class="javax.swing.JButton" binding="addProductButton">
-            <constraints border-constraint="West"/>
-            <properties>
-              <text value="Register Product"/>
-            </properties>
-          </component>
-          <component id="ff565" class="javax.swing.JButton" binding="printAllProductButton" default-binding="true">
-            <constraints border-constraint="Center"/>
-            <properties>
-              <text value="Print All Product"/>
-            </properties>
-          </component>
-          <component id="ce9cb" class="javax.swing.JButton" binding="findProductButton" default-binding="true">
-            <constraints border-constraint="East"/>
-            <properties>
-              <text value="Find Product"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
-      <component id="c2de1" class="javax.swing.JTextArea" binding="displayProduct">
-        <constraints border-constraint="Center"/>
-        <properties/>
-      </component>
       <grid id="28ae8" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints border-constraint="South"/>
@@ -56,13 +25,65 @@
               <text value=""/>
             </properties>
           </component>
-          <hspacer id="5eaf">
+          <component id="dc36" class="javax.swing.JLabel" binding="jam">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="1" use-parent-layout="false"/>
             </constraints>
-          </hspacer>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
         </children>
       </grid>
+      <tabbedpane id="e3e15" binding="tabbedPane1" default-binding="true">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="cd879" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Customer"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="910c6" binding="topPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <tabbedpane title="Product"/>
+            </constraints>
+            <properties>
+              <background color="-10924861"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="9fe55" class="javax.swing.JButton" binding="addProductButton">
+                <constraints border-constraint="West"/>
+                <properties>
+                  <text value="Register Product"/>
+                </properties>
+              </component>
+              <component id="ff565" class="javax.swing.JButton" binding="printAllProductButton" default-binding="true">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <text value="Print All Product"/>
+                </properties>
+              </component>
+              <component id="ce9cb" class="javax.swing.JButton" binding="findProductButton" default-binding="true">
+                <constraints border-constraint="East"/>
+                <properties>
+                  <text value="Find Product"/>
+                </properties>
+              </component>
+              <component id="db661" class="javax.swing.JTextArea" binding="DisplayProduct">
+                <constraints border-constraint="South"/>
+                <properties/>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </tabbedpane>
     </children>
   </grid>
 </form>

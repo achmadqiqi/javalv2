@@ -10,9 +10,6 @@ public class CustomerManager {
     public void removeCustomer(Customer customer){
         customerList.remove(customer);
     }
-    public void addCustomer(Customer customer){
-        customerList.add(customer);
-    }
     public Customer findCustomerById(String Id){
         for (Customer customer: customerList){
             if (customer.getId().equals(Id)){
@@ -22,7 +19,6 @@ public class CustomerManager {
         return null;
     }
 
-    public List<Customer> getCustomerList() {
-        return customerList;
-    }
+    public List<Customer> getCustomerList() {  return customerList;    }
+    public void addCustomer(Customer customer) { customerList.add(customer); }
 }

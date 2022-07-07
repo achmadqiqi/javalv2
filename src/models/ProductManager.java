@@ -35,8 +35,6 @@ public class ProductManager {
     public List<Product> getProductList() {
         return productList;
     }
-    public List<Product> getAllProduct(){
-        return getAllPoduct();
-    }
+
 
 }
