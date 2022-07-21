@@ -2,10 +2,12 @@ package models;
 
 import entities.Shop;
 
+import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderManager {
+public class OrderManager implements Serializable {
     private List<Order> orders = new ArrayList<>();
     public Order createOrder(Shop shop){
         return new Order(shop);

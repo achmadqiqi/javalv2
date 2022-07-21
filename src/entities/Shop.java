@@ -5,7 +5,9 @@ import models.CustomerManager;
 import models.OrderManager;
 import models.ProductManager;
 
-public class Shop {
+import java.io.Serializable;
+
+public class Shop implements Serializable {
     private String name, npwp, alamat;
     private ProductManager pm = new ProductManager();
     private OrderManager om = new OrderManager();

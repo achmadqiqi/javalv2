@@ -1,19 +1,24 @@
 package views;
 
-import controllers.PMController;
-import entities.Product;
+import enums.ProductCategory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class RegisterProductDialog extends JDialog {
-    private MainFrame parent;
+    private final MainFrame parent;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField inputID;
     private JTextField inputName;
     private JTextField inputPrice;
+    private JComboBox cbCategory;
+    private JLabel imageIcon;
+    private JButton uploadButton;
+    private JTextField inputCategory;
+    private ImageIcon defaultNoImageIcon;
 
     public RegisterProductDialog(MainFrame parent) {
         this.parent = parent;
@@ -22,13 +27,15 @@ public class RegisterProductDialog extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        //initial no_image
+        ImageIcon image = new ImageIcon(getClass().getResource("src/images/no_image.jpg"));
+        //fit to label
+        Image img = image.getImage().getScaledInstance(150,150,Image.SCALE_SMOOTH);
+        defaultNoImageIcon = new ImageIcon(img);
+        DefaultComboBoxModel model = new DefaultComboBoxModel(ProductCategory.values());
+        cbCategory.setModel(model);
         buttonCancel.addActionListener(e -> dispose());
-        buttonOK.addActionListener(e -> {
-            Product p = new Product(inputID.getText(),inputName.getText(),Double.parseDouble(inputPrice.getText()));
-            parent.getPmController().registerProduct(p);
-            parent.showMessage("Product "+p.getId()+" telah ditambahkan");
-            dispose();
-        });
+        buttonOK.addActionListener(e -> dispose());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

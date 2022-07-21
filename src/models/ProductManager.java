@@ -2,10 +2,11 @@ package models;
 
 import entities.Product;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductManager {
+public class ProductManager implements Serializable {
     private List<Product> productList = new ArrayList<>();
 
     public void registerProduct(Product p) {
@@ -37,4 +38,7 @@ public class ProductManager {
     }
 
 
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
 }

@@ -1,6 +1,8 @@
 package entities;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     double lattitude, longtitude;
 
     public Location(double lattitude, double longtitude) {
