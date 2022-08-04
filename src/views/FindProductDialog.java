@@ -30,14 +30,13 @@ public class FindProductDialog extends JDialog {
 
 
         buttonOK.addActionListener(e ->  {
+            Item i = new Item();
             int row = tableProduct.getSelectedRow();
             String iDProduct = (String) tableProduct.getValueAt(row,0);
+            Product p = parent.getParent().getPmController().findProductById(iDProduct);
+            i.setProduct(p);
             int jumlah = Integer.parseInt(inputJumlah.getText());
-            Item item = new Item(parent.getParent().getPmController().findProductById(iDProduct),jumlah);
-            Order order = new Order();
-            order.addItem(item);
-            parent.getParent().getOmController().addOrder(order);
-
+            i.setJumlah(jumlah);
             dispose();
         });
 

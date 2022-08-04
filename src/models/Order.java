@@ -15,6 +15,10 @@ public class Order implements Serializable {
     public Order() {
     }
 
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
     public void addItem(Item item) {
         itemList.add(item);
     }

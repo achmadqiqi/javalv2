@@ -1,6 +1,5 @@
 package views;
 
-import entities.Product;
 import models.Item;
 import models.Order;
 
@@ -9,14 +8,15 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 
 public class OrderDialog extends JDialog {
-    private final MainFrame parent;
+    private MainFrame parent;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTable tableItem;
-    private JTextField textField1;
+    private JTextField findCustomer;
     private JButton addItemButton;
     private JButton customerButton;
+    private JLabel Total;
     private JTextField InputId;
     private JTextField Inputjumlah;
     private final Order order = new Order();
@@ -32,9 +32,7 @@ public class OrderDialog extends JDialog {
         showTableItems();
 
         buttonOK.addActionListener(e -> {
-
-
-
+        dispose();
         });
 
         buttonCancel.addActionListener(new ActionListener() {
@@ -60,25 +58,28 @@ public class OrderDialog extends JDialog {
 //        addItemButton.addActionListener(new ActionListener() {
 //        });
         addItemButton.addActionListener(e -> {
-//            Item i = new Item();
-//            String id = JOptionPane.showInputDialog("Masukkan Id :");
-//            Product p = parent.getPmController().findProductById(id);
-//            i.setProduct(p);
-//            int jumlah = Integer.valueOf(JOptionPane.showInputDialog("Jumlah :"));
-//            i.setJumlah(jumlah);
-//            order.addItem(i);
-//
-        FindProductDialog dialog = new FindProductDialog(this);
-        dialog.setVisible(true);
-
+            Item i = new Item();
+            FindProductDialog dialog = new FindProductDialog(this);
+            dialog.setVisible(true);
+            order.addItem(i);
+            showTableItems();
         });
     }
 
     private void showTableItems() {
         Object [] colom = {"ID","Name","Category","Price","Jumlah","SubTotal"};
         DefaultTableModel model = new DefaultTableModel(null,colom );
+        //render data
+        for (Item i : order.getItemList()){
+            Object [] data = {
+                    i.getProduct().getId(),i.getProduct().getName(),i.getProduct().getCategory(),
+                    i.getProduct().getPrice(),i.getJumlah(),i.getSubtotal()
+            };
+            model.addRow(data);
+        }
         tableItem.setModel(model);
     }
+
 
     @Override
     public MainFrame getParent() {
