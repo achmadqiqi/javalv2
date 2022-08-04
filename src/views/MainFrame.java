@@ -12,13 +12,11 @@ import models.Order;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainFrame extends JFrame{
@@ -41,18 +39,22 @@ public class MainFrame extends JFrame{
     private JButton showAllCustomer;
     private JButton removeCustomerButton;
     private JButton findCustomerButton;
-    private JTextArea textArea1;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
     private JPanel product;
     private JTextArea displayAllProduct;
     private JButton regProductButton;
     private JButton showAllProduct;
     private JButton findProductButton;
     private JPanel orderProduct;
+    private JButton addOrder;
+    private JButton customer;
+    private JTable orderList;
+    private JTextField idCustomer;
+    private JLabel customerFound;
     private JButton removeProductButton;
+    private ImageIcon customerIcon;
+    private ImageIcon defaultCmr;
+    private ImageIcon addOrderIcon;
+    private ImageIcon defaultOm;
 
     public MainFrame(String title, Shop shop){
         super(title);
@@ -61,6 +63,8 @@ public class MainFrame extends JFrame{
         omController = new OMController(shop.getOm());
         cmController = new CMController(shop.getCm());
         initComponents();
+        shop.getCm().addCustomer(new Customer("1","Qiqi","Jl Saharjo, Kediri","7.823",
+                "111.986","0812134556","qiqi@gmail.com"));
         doButton.addActionListener(e -> {
             switch (cbAction.getSelectedIndex()){
                 case 0 : emptyData(); break;
@@ -70,11 +74,18 @@ public class MainFrame extends JFrame{
                 case 4 : restoreData(); break;
             }
         });
-//        EmpyData
-//                ImportData
-//        SaveData
-//                BackupData
-//        RestoreData
+
+        customer.addActionListener(e -> {
+            String id = idCustomer.getText();
+            Customer customer = cmController.findCustomerById(id);
+            customerFound.setText("Customer ID : "+customer.getId()+ "Name : "+customer.getName()+"  ditemukan");
+            });
+
+        addOrder.addActionListener(e -> {
+            OrderDialog dialog = new OrderDialog(this);
+            dialog.setVisible(true);
+        });
+
     }
 
     public Shop getShop() {
@@ -83,9 +94,12 @@ public class MainFrame extends JFrame{
     public PMController getPmController() {
         return pmController;
     }
-
     public CMController getCmController() {
         return cmController;
+    }
+
+    public OMController getOmController() {
+        return omController;
     }
 
     private void initComponents() {
@@ -111,8 +125,17 @@ public class MainFrame extends JFrame{
             findCustomer();
         });
         getContentPane().add(mainPanel);
-        setSize(600,400);
+        setSize(800,400);
         setLocationRelativeTo(null);
+        ImageIcon customerIcon =new ImageIcon(getClass().getResource("../images/customer.jpg"));
+        Image imageCmr = customerIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
+        defaultCmr = new ImageIcon(imageCmr);
+        customer.setIcon(defaultCmr);
+        ImageIcon addOrderIcon =new ImageIcon(getClass().getResource("../images/addOrder.png"));
+        Image imageOm = addOrderIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
+        defaultOm = new ImageIcon(imageOm);
+        addOrder.setIcon(defaultOm);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -125,6 +148,8 @@ public class MainFrame extends JFrame{
         Customer customer = cmController.findCustomerById(id);
         displayAllCustomer.append(customer+"\n");
         showMessage("Customer Name : "+customer.getId()+"  ditemukan");
+
+
     }
 
     //doAction - presistence operation
@@ -138,23 +163,7 @@ public class MainFrame extends JFrame{
         List<Product> data = FileServices.readFileTxt(filename);
         shop.getPm().setProductList(data);
     }
-//    private void backupData() {
-//        JFileChooser chooser = new JFileChooser();
-//        FileNameExtensionFilter filter =new FileNameExtensionFilter("TXT file", "txt");
-//        chooser.setFileFilter(filter);
-//        chooser.showOpenDialog(this);
-//        String fileName = "src/product.txt";
-//        List<Product> data = pmController.getAllProducts();
-//
-//        try {
-//            FileWriter fileWriter = new FileWriter(fileName);
-//            fileWriter.write(data.toString());
-//            fileWriter.close();
-//        } catch (IOException e){
-//            System.out.println(("Terjadi kesalahan karena: "+ e.getMessage()));
-//        }
-//
-//    }
+
     private void backupData() {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("PDO files","pdo");
@@ -166,10 +175,11 @@ public class MainFrame extends JFrame{
         showMessage("Object shop tersimpan");
     }
     private void emptyData() {
-        shop = new Shop("PDO Store");
+        shop = new Shop("Pizza Oke");
         pmController = new PMController(shop.getPm());
         displayAllProduct.setText("");
     }
+
     private void restoreData() {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("PDO files","pdo");
@@ -177,9 +187,12 @@ public class MainFrame extends JFrame{
         chooser.showOpenDialog(this);
         String fileAbsolutePath = chooser.getSelectedFile().getAbsolutePath();
         shop = (Shop) FileServices.readObjectFromFile(fileAbsolutePath);
+        pmController = new PMController((shop.getPm()));
+        omController = new OMController(shop.getOm());
     }
 
     private void saveData() {
+        FileServices.saveObjectToFile(shop,Apps.DEFAULT_FILENAME);
     }
 
     public void Clock() {
@@ -204,6 +217,9 @@ public class MainFrame extends JFrame{
         Product p = pmController.findProductById(id);
         displayAllProduct.append(p+"\n");
         showMessage("Product "+p.getId()+"  ditemukan");
+        //Buat detail product UI sekaligus bisa diedit
+        Dialog dialog = new DetailProductDialog(this,p);
+        dialog.setVisible(true);
     }
     private void registerCustomer(){
         Dialog dialog = new RegisterCustomerDialog(this);

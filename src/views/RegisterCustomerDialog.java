@@ -30,7 +30,7 @@ public class RegisterCustomerDialog extends JDialog {
 //        parent.showMessage("Product "+p.getId()+" telah ditambahkan");
         buttonOK.addActionListener(e -> {
             Customer customer = new Customer(inputID.getText(),inputName.getText(),inputAddress.getText(),
-                    inputLongtitude.getText(),inputLatitude.getText(),inputPhone.getText(),inputPhone.getText(),
+                    inputPhone.getText(),inputLongtitude.getText(),inputLatitude.getText(),
                     inputEmail.getText());
 
             parent.getCmController().addCustomer(customer);

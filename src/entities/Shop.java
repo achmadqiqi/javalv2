@@ -5,9 +5,12 @@ import models.CustomerManager;
 import models.OrderManager;
 import models.ProductManager;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Shop implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 6925671169678302161L;
     private String name, npwp, alamat;
     private ProductManager pm = new ProductManager();
     private OrderManager om = new OrderManager();

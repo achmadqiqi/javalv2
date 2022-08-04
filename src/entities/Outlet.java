@@ -7,11 +7,9 @@ public class Outlet {
         this.id = id;
         this.alamat = alamat;
     }
-
     public String getAlamat() {
         return alamat;
     }
-
     public String getId() {
         return id;
     }

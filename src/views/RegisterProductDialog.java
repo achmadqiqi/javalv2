@@ -1,10 +1,13 @@
 package views;
 
+import entities.Product;
 import enums.ProductCategory;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class RegisterProductDialog extends JDialog {
     private final MainFrame parent;
@@ -19,23 +22,28 @@ public class RegisterProductDialog extends JDialog {
     private JButton uploadButton;
     private JTextField inputCategory;
     private ImageIcon defaultNoImageIcon;
+    private ImageIcon imageFile;
+    private ImageIcon imageProductFile;
 
     public RegisterProductDialog(MainFrame parent) {
         this.parent = parent;
-        setLocationRelativeTo(null);
-        setSize(400,200);
+        setLocation(parent.getX()+600,parent.getY());
+        setSize(400,400);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        //initial no_image
-        ImageIcon image = new ImageIcon(getClass().getResource("src/images/no_image.jpg"));
-        //fit to label
-        Image img = image.getImage().getScaledInstance(150,150,Image.SCALE_SMOOTH);
-        defaultNoImageIcon = new ImageIcon(img);
-        DefaultComboBoxModel model = new DefaultComboBoxModel(ProductCategory.values());
-        cbCategory.setModel(model);
+        //initial
+        cbCategory.setModel(new DefaultComboBoxModel<>(ProductCategory.values()));
+        cbCategory.getSelectedItem();
+        ImageIcon imageFile =new ImageIcon(getClass().getResource("../images/no_images.jpg"));
+        Image image = imageFile.getImage().getScaledInstance(150,150,Image.SCALE_SMOOTH);
+        defaultNoImageIcon = new ImageIcon(image);
+        imageIcon.setIcon(defaultNoImageIcon);
         buttonCancel.addActionListener(e -> dispose());
-        buttonOK.addActionListener(e -> dispose());
+        buttonOK.addActionListener(e -> {
+            registerProduct();
+
+        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -51,6 +59,31 @@ public class RegisterProductDialog extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        uploadButton.addActionListener(e -> {
+            JFileChooser chooser = new JFileChooser();
+//            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.jpg,*.png,*.jpeg","JPG,PNG,JPEG");
+//            chooser.setFileFilter(filter);
+            chooser.showOpenDialog(this);
+            File file = chooser.getSelectedFile();
+            ImageIcon imgIcon = new ImageIcon(file.getAbsolutePath());
+            imageProductFile = new ImageIcon(imgIcon.getImage().getScaledInstance(150,150,Image.SCALE_SMOOTH));
+            imageIcon.setIcon(imageProductFile);
+        });
+    }
+
+    private void registerProduct() {
+        Product product = new Product();
+        product.setId(inputID.getText());
+        product.setName(inputName.getText());
+        product.setCategory(cbCategory.getSelectedItem().toString());
+        product.setPrice(Double.parseDouble(inputPrice.getText()));
+        if(imageProductFile!=null){
+            product.setImageIcon(imageProductFile);
+        }else{
+            product.setImageIcon(defaultNoImageIcon);
+        }
+        parent.getPmController().registerProduct(product);
+        dispose();
     }
 
     private void onOK() {

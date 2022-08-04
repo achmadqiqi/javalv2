@@ -1,19 +1,30 @@
 package entities;
 
+import enums.ProductCategory;
+
 import javax.swing.*;
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-    private String id, name, category;
+    @Serial
+    private static final long serialVersionUID = 5789417225345326807L;
+    private String id, name;
+    private String category;
     private double price;
-    private ImageIcon image;
+    private ImageIcon imageIcon;
+
     public Product(String id, String name, String category, double price) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
-    }
 
+    }
+    //POJO Plain Old Java Object
+    public Product(){
+
+    }
     public String getId() {
         return id;
     }
@@ -38,14 +49,12 @@ public class Product implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    public ImageIcon getImage() {
-        return image;
+    public ImageIcon getImageIcon() {
+        return imageIcon;
     }
-    public void setImage(ImageIcon image) {
-        this.image = image;
+    public void setImageIcon(ImageIcon imageIcon) {
+        this.imageIcon = imageIcon;
     }
-
     @Override
     public String toString() {
         return "Product{" +
@@ -53,6 +62,7 @@ public class Product implements Serializable {
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", price=" + price +
+                ", imageIcon=" + imageIcon +
                 '}';
     }
 }

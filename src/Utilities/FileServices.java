@@ -2,13 +2,20 @@ package Utilities;
 
 import entities.Product;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+//import static com.sun.org.apache.xml.internal.security.Init.getResource;
+
 public class FileServices {
+
     public static List<Product> readFileTxt(String filename){
+
         try {
             List<Product> data = new ArrayList<>();
             File file = new File(filename);
@@ -27,6 +34,9 @@ public class FileServices {
         }
 
     }
+
+
+
     public static void saveObjectToFile(Object object, String filename){
         try {
             FileOutputStream fos = new FileOutputStream(filename);

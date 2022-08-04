@@ -9,8 +9,9 @@ import java.util.List;
 
 public class OrderManager implements Serializable {
     private List<Order> orders = new ArrayList<>();
+    private Item item;
     public Order createOrder(Shop shop){
-        return new Order(shop);
+        return new Order();
     }
 
     public void addOrder(Order order) {

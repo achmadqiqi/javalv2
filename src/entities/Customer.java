@@ -1,13 +1,17 @@
 package entities;
 
 import javax.xml.stream.Location;
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Customer implements Serializable {
-    private String id, name, address, phone, longtitude, latitude, email;
+    @Serial
+    private static final long serialVersionUID = 4010558382033140732L;
+    private String id, name, address, phone, longtitude, latitude;
+    private String email;
     private Location location;
 
-    public Customer(String text, String id, String name, String address, String longtitude, String latitude, String phone, String email) {
+    public Customer(String id, String name, String address, String longtitude, String latitude, String phone, String email) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -47,6 +51,11 @@ public class Customer implements Serializable {
         return "Customer{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\''+
+                ", addres='" + address + '\''+
+                ", phone='" + phone + '\''+
+                ", lontitude='" + longtitude + '\''+
+                ", latitude='" + latitude + '\''+
+                ", email='" + email + '\''+
                 '}';
     }
 }

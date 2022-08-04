@@ -15,7 +15,7 @@ import java.util.List;
 public class Apps {
     private static Shop shop;
     private static MainFrame mainFrame;
-    private static final String DEFAULT_FILENAME = "shop.pdo";
+    public static final String DEFAULT_FILENAME = "shop.pdo";
     public static void main(String[] args) {
         //inisialisasi
         shop = (Shop) FileServices.readObjectFromFile(Apps.DEFAULT_FILENAME);
@@ -29,9 +29,9 @@ public class Apps {
 //        shop.getPm().registerProduct(product);
 //        shop.getPm().registerProduct(new Product("2","Pizza Cheese","Pizza",45));
 //
-//        FileServices.saveObjectToFile(shop,Apps.DEFAULT_FILENAME);
-//        shop = (Shop) FileServices.readObjectFromFile(Apps.DEFAULT_FILENAME);
-//        shop.getPm().printAllProduct();
+        FileServices.saveObjectToFile(shop,Apps.DEFAULT_FILENAME);
+        shop = (Shop) FileServices.readObjectFromFile(Apps.DEFAULT_FILENAME);
+        shop.getPm().printAllProduct();
 
         //        ProductManager pm = new ProductManager();
 //        pm.registerProduct(product);

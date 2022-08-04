@@ -3,11 +3,14 @@ package models;
 import entities.Customer;
 import entities.Product;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerManager implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -636365043648424238L;
     private List<Customer> customerList = new ArrayList<>();
 //    public void removeCustomer(Customer customer){
 //        customerList.remove(customer);
