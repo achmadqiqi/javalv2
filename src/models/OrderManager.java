@@ -13,7 +13,9 @@ public class OrderManager implements Serializable {
     public Order createOrder(Shop shop){
         return new Order();
     }
-
+    public List<Order> getOrder(){
+        return orders;
+    }
     public void addOrder(Order order) {
         orders.add(order);
     }

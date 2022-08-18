@@ -103,10 +103,17 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="a589f" class="javax.swing.JTable" binding="tableProduct">
+          <scrollpane id="4b2c0" binding="orderTableScrollPane">
             <constraints/>
             <properties/>
-          </component>
+            <border type="none"/>
+            <children>
+              <component id="2ed38" class="javax.swing.JTable" binding="orderTable">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </scrollpane>
     </children>

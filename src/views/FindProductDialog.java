@@ -17,6 +17,8 @@ public class FindProductDialog extends JDialog {
     private JButton SearchItem;
     private JTable tableProduct;
     private JTextField inputJumlah;
+    private JTable orderTable;
+    private JScrollPane orderTableScrollPane;
     private OrderDialog parent;
 
     public FindProductDialog(OrderDialog parent) {
@@ -30,13 +32,17 @@ public class FindProductDialog extends JDialog {
 
 
         buttonOK.addActionListener(e ->  {
-            Item i = new Item();
-            int row = tableProduct.getSelectedRow();
-            String iDProduct = (String) tableProduct.getValueAt(row,0);
-            Product p = parent.getParent().getPmController().findProductById(iDProduct);
-            i.setProduct(p);
-            int jumlah = Integer.parseInt(inputJumlah.getText());
-            i.setJumlah(jumlah);
+//            Item i = new Item();
+//            Order order = new Order();
+//            int row = tableProduct.getSelectedRow();
+//            String iDProduct = (String) tableProduct.getValueAt(row,0);
+//            Product p = parent.getParent().getPmController().findProductById(iDProduct);
+//            i.setProduct(p);
+//            int jumlah = Integer.parseInt(inputJumlah.getText());
+//            i.setJumlah(jumlah);
+//            order.addItem(i);
+//            parent.getParent().getOmController().addOrder(order);
+//            parent.getParent().getOmController().printAllOrder();;
             dispose();
         });
 
@@ -61,6 +67,19 @@ public class FindProductDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+        orderTableScrollPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("hello");
+            }
+        });
+
+        orderTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("hello");
+            }
+        });
     }
 
     private void showProductTable() {
@@ -72,7 +91,6 @@ public class FindProductDialog extends JDialog {
             model.addRow(data);
         }
         tableProduct.setModel(model);
-        tableProduct.getColumnModel().getColumn(1).setPreferredWidth(350);
     }
 
     private void onOK() {

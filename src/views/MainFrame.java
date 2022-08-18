@@ -11,9 +11,8 @@ import entities.Shop;
 import models.Order;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -48,11 +47,12 @@ public class MainFrame extends JFrame{
     private JButton addOrder;
     private JButton customer;
     private JTable orderList;
-    private JTextField idCustomer;
+    private JTextField invoiceId;
     private JLabel customerFound;
+    private JTable orderTable;
+    private JButton sendButton;
     private JButton removeProductButton;
-    private ImageIcon customerIcon;
-    private ImageIcon defaultCmr;
+    private ImageIcon defaultSend;
     private ImageIcon addOrderIcon;
     private ImageIcon defaultOm;
 
@@ -62,6 +62,7 @@ public class MainFrame extends JFrame{
         pmController = new PMController(shop.getPm());
         omController = new OMController(shop.getOm());
         cmController = new CMController(shop.getCm());
+        showOrderTable();
         initComponents();
         shop.getCm().addCustomer(new Customer("1","Qiqi","Jl Saharjo, Kediri","7.823",
                 "111.986","0812134556","qiqi@gmail.com"));
@@ -73,13 +74,9 @@ public class MainFrame extends JFrame{
                 case 3 : backupData(); break;
                 case 4 : restoreData(); break;
             }
+
         });
 
-        customer.addActionListener(e -> {
-            String id = idCustomer.getText();
-            Customer customer = cmController.findCustomerById(id);
-            customerFound.setText("Customer ID : "+customer.getId()+ "Name : "+customer.getName()+"  ditemukan");
-            });
 
         addOrder.addActionListener(e -> {
             OrderDialog dialog = new OrderDialog(this);
@@ -103,6 +100,8 @@ public class MainFrame extends JFrame{
     }
 
     private void initComponents() {
+        sendButton.addActionListener(e -> {
+        });
 
         //Listener
         showAllProduct.addActionListener(e -> {
@@ -127,10 +126,10 @@ public class MainFrame extends JFrame{
         getContentPane().add(mainPanel);
         setSize(800,400);
         setLocationRelativeTo(null);
-        ImageIcon customerIcon =new ImageIcon(getClass().getResource("../images/customer.jpg"));
-        Image imageCmr = customerIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
-        defaultCmr = new ImageIcon(imageCmr);
-        customer.setIcon(defaultCmr);
+        ImageIcon sendIcon =new ImageIcon(getClass().getResource("../images/send.png"));
+        Image imageSend = sendIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
+        defaultSend = new ImageIcon(imageSend);
+        sendButton.setIcon(defaultSend);
         ImageIcon addOrderIcon =new ImageIcon(getClass().getResource("../images/addOrder.png"));
         Image imageOm = addOrderIcon.getImage().getScaledInstance(20,20,Image.SCALE_SMOOTH);
         defaultOm = new ImageIcon(imageOm);
@@ -148,8 +147,6 @@ public class MainFrame extends JFrame{
         Customer customer = cmController.findCustomerById(id);
         displayAllCustomer.append(customer+"\n");
         showMessage("Customer Name : "+customer.getId()+"  ditemukan");
-
-
     }
 
     //doAction - presistence operation
@@ -177,6 +174,8 @@ public class MainFrame extends JFrame{
     private void emptyData() {
         shop = new Shop("Pizza Oke");
         pmController = new PMController(shop.getPm());
+        omController = new OMController(shop.getOm());
+        showOrderTable();
         displayAllProduct.setText("");
     }
 
@@ -252,4 +251,19 @@ public class MainFrame extends JFrame{
             System.out.println(c);
         }
     }
+
+     public void showOrderTable(){
+            List<Order> orders = omController.getOrderList();
+            DefaultTableModel model = new DefaultTableModel();
+            model.setColumnIdentifiers(new Object[]{"ID","Name","Total"});
+            for (Order order : orders){
+                model.addRow(new Object[]{
+                    order.getInvoice(),order.getCustomer().getName(),order.getTotal()
+                });
+            }
+            getOmController().printAllOrder();
+            orderTable.setModel(model);
+        }
+
+
 }

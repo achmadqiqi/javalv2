@@ -4,6 +4,8 @@ import entities.Shop;
 import models.Order;
 import models.OrderManager;
 
+import java.util.List;
+
 public class OMController {
     private OrderManager om;
 
@@ -16,6 +18,9 @@ public class OMController {
 
     public void addOrder(Order order) {
         om.addOrder(order);
+    }
+    public List<Order> getOrderList(){
+        return om.getOrders();
     }
 
     public void printAllOrder() {
